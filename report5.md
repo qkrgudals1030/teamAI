@@ -851,7 +851,46 @@ const Shader = () => {
 
 export default Shader;
 ```
+###Map, RoughnessMap
+![녹음 2024-05-19 174947](https://github.com/qkrgudals1030/teamAI/assets/50951220/c6697a6f-690a-4020-9989-9a8aab9912cb)
+```
+import * as THREE from 'three';
+import { OrbitControls, useTexture } from '@react-three/drei';
 
+const Box = () => {
+  // texture.map 으로 접근할 수 있으며, map은 원하는 이름으로 바꿔도 됨.
+  const textures = useTexture({
+    map: './images/texture/window/Glass_Window_004_basecolor.jpg',
+    roughnessMap: './images/texture/window/Glass_Window_004_roughness.jpg',
+  });
+
+  return (
+    <>
+      <OrbitControls />
+
+      <ambientLight intensity={0.2} />
+      <directionalLight position={[0, 1, -8]} intensity={0.4} />
+      <directionalLight position={[1, 2, 8]} intensity={0.4} />
+
+      <mesh>
+        <cylinderGeometry args={[2, 2, 3, 1024, 1024, true]} />
+        <meshStandardMaterial
+          side={THREE.DoubleSide} // 양면 렌더링
+          
+          // 색상 매핑
+          map={textures.map} // 텍스처 색상 매핑
+          
+          // 거칠기 매핑
+          roughnessMap={textures.roughnessMap} // 거칠기 텍스처 매핑
+          roughnessMap-colorSpace={THREE.NoColorSpace} // 텍스처의 색상 공간 지정 (NoColorSpace: 텍스처의 색상 공간 변환을 비활성화 하여 원본 색상 값을 사용하도록 지시)
+        />
+      </mesh>
+    </>
+  );
+};
+
+export default Box;
+'''
 
 
 
