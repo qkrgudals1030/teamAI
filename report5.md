@@ -851,7 +851,7 @@ const Shader = () => {
 
 export default Shader;
 ```
-###Map, RoughnessMap
+### Map, RoughnessMap
 ![녹음 2024-05-19 174947](https://github.com/qkrgudals1030/teamAI/assets/50951220/c6697a6f-690a-4020-9989-9a8aab9912cb)
 ```
 import * as THREE from 'three';
@@ -890,15 +890,423 @@ const Box = () => {
 };
 
 export default Box;
-'''
+```
+
+### MetalnessMap
+![녹음 2024-05-19 175241](https://github.com/qkrgudals1030/teamAI/assets/50951220/05508d6f-7b04-4b29-a93e-c769de99d1f0)
+```
+import * as THREE from 'three';
+import { OrbitControls, useTexture } from '@react-three/drei';
+
+const Box = () => {
+  const textures = useTexture({
+    map: './images/texture/window/Glass_Window_004_basecolor.jpg',
+    roughnessMap: './images/texture/window/Glass_Window_004_roughness.jpg',
+    metalnessMap: './images/texture/window/Glass_Window_004_metallic.jpg', // 원본 이미지의 어두운부분: 메탈 성질이 약, 밝은부분: 메탈성질 강
+  });
+
+  return (
+    <>
+      <OrbitControls />
+
+      <ambientLight intensity={0.2} />
+      <directionalLight position={[0, 1, -8]} intensity={0.4} />
+      <directionalLight position={[1, 2, 8]} intensity={0.4} />
+
+      <mesh>
+        <cylinderGeometry args={[2, 2, 3, 1024, 1024, true]} />
+        <meshStandardMaterial
+          side={THREE.DoubleSide}
+          
+          // 색상 매핑
+          map={textures.map}
+          
+          // 거칠기 매핑
+          roughnessMap={textures.roughnessMap}
+          roughnessMap-colorSpace={THREE.NoColorSpace}
+          
+          // 금속도 매핑
+          metalnessMap={textures.metalnessMap}
+          metalness={0.5}  // 0 ~ 1
+          metalnessMap-colorSpace={THREE.NoColorSpace}
+        />
+      </mesh>
+    </>
+  );
+};
+
+export default Box;
+```
+
+### NormalMap
+![녹음 2024-05-19 175436](https://github.com/qkrgudals1030/teamAI/assets/50951220/02c61f59-c097-49a1-acf0-881f32bc9f06)
+```
+import * as THREE from 'three';
+import { OrbitControls, useTexture } from '@react-three/drei';
+
+const Box = () => {
+  const textures = useTexture({
+    map: './images/texture/window/Glass_Window_004_basecolor.jpg',
+    roughnessMap: './images/texture/window/Glass_Window_004_roughness.jpg',
+    metalnessMap: './images/texture/window/Glass_Window_004_metallic.jpg',
+    normalMap: './images/texture/window/Glass_Window_004_normal.jpg',
+  });
+
+  return (
+    <>
+      <OrbitControls />
+
+      <ambientLight intensity={0.2} />
+      <directionalLight position={[0, 1, -8]} intensity={0.4} />
+      <directionalLight position={[1, 2, 8]} intensity={0.4} />
+
+      <mesh>
+        <cylinderGeometry args={[2, 2, 3, 1024, 1024, true]} />
+        <meshStandardMaterial
+          side={THREE.DoubleSide} // 양면 렌더링
+          
+          // 색상 매핑
+          map={textures.map}
+          
+          // 거칠기 매핑
+          roughnessMap={textures.roughnessMap}
+          roughnessMap-colorSpace={THREE.NoColorSpace}
+          
+          // 금속도 매핑
+          metalnessMap={textures.metalnessMap}
+          metalness={0.5}
+          metalnessMap-colorSpace={THREE.NoColorSpace}
+          
+          // 입체감 매핑
+          normalMap={textures.normalMap}
+          normalMap-colorSpace={THREE.NoColorSpace}
+          normalScale={1} // -1 ~ 1 (기본값: 1, 필요에 따라 벗어날 수 있음)
+        />
+      </mesh>
+    </>
+  );
+};
+
+export default Box;
+```
+
+### DisplacementMap
+![2024-05-19175642-ezgif com-video-to-gif-converter](https://github.com/qkrgudals1030/teamAI/assets/50951220/07f4a431-508e-4bc9-a6a5-91114f25a486)
+```
+import * as THREE from 'three';
+import { OrbitControls, useTexture } from '@react-three/drei';
+
+const Box = () => {
+  const textures = useTexture({
+    map: './images/texture/window/Glass_Window_004_basecolor.jpg',
+    roughnessMap: './images/texture/window/Glass_Window_004_roughness.jpg',
+    metalnessMap: './images/texture/window/Glass_Window_004_metallic.jpg',
+    normalMap: './images/texture/window/Glass_Window_004_normal.jpg',
+    displacementMap: './images/texture/window/Glass_Window_004_height.png', // 원본 이미지의 어두운부분: 지오메트리 변경도 약, 밝은부분: 지오메트리 변경도 강 / 변경의 방향은 normal 벡터의 방향과 동일
+  });
+
+  return (
+    <>
+      <OrbitControls />
+
+      <ambientLight intensity={0.2} />
+      <directionalLight position={[0, 1, -8]} intensity={0.4} />
+      <directionalLight position={[1, 2, 8]} intensity={0.4} />
+
+      <mesh>
+        <cylinderGeometry args={[2, 2, 3, 1024, 1024, true]} />
+        <meshStandardMaterial
+          side={THREE.DoubleSide} // 양면 렌더링
+          
+          // 색상 매핑
+          map={textures.map}
+          
+          // 거칠기 매핑
+          roughnessMap={textures.roughnessMap}
+          roughnessMap-colorSpace={THREE.NoColorSpace}
+          
+          // 금속도 매핑
+          metalnessMap={textures.metalnessMap}
+          metalness={0.5}
+          metalnessMap-colorSpace={THREE.NoColorSpace}
+          
+          // 입체감 매핑
+          normalMap={textures.normalMap}
+          normalMap-colorSpace={THREE.NoColorSpace}
+          normalScale={1}
+          
+          // 입체감 매핑
+          displacementMap={textures.displacementMap}
+          displacementMap-colorSpace={THREE.NoColorSpace}
+          displacementScale={0.2}
+          displacementBias={-0.02}
+        />
+      </mesh>
+    </>
+  );
+};
+
+export default Box;
+```
+
+### AmbientOcclusionMap
+![2024-05-19180256-ezgif com-video-to-gif-converter](https://github.com/qkrgudals1030/teamAI/assets/50951220/c3adea27-ab2d-406a-8c9e-fefab2c14086)
+```
+import { useRef, useEffect } from 'react';
+import * as THREE from 'three';
+import { OrbitControls, useTexture } from '@react-three/drei';
+
+const Box = () => {
+  const mesh = useRef();
+
+  const textures = useTexture({
+    map: './images/texture/window/Glass_Window_004_basecolor.jpg',
+    roughnessMap: './images/texture/window/Glass_Window_004_roughness.jpg',
+    metalnessMap: './images/texture/window/Glass_Window_004_metallic.jpg',
+    normalMap: './images/texture/window/Glass_Window_004_normal.jpg',
+    displacementMap: './images/texture/window/Glass_Window_004_height.png',
+    aoMap: './images/texture/window/Glass_Window_004_ambientOcclusion.jpg',
+  });
+
+  // 2. mesh uv2
+  useEffect(() => {
+    mesh.current.geometry.setAttribute('uv2', new THREE.BufferAttribute(mesh.current.geometry.attributes.uv.array, 2));
+  }, []);
+
+  return (
+    <>
+      <OrbitControls />
+
+      {/* 1. 조명 */}
+      <ambientLight intensity={0.2} />
+      <directionalLight position={[0, 1, -8]} intensity={0.4} />
+      <directionalLight position={[1, 2, 8]} intensity={0.4} />
+
+      <mesh ref={mesh}>
+        <cylinderGeometry args={[2, 2, 3, 1024, 1024, true]} />
+        <meshStandardMaterial
+          side={THREE.DoubleSide} // 양면 렌더링
+          
+          // 색상 매핑
+          map={textures.map}
+          
+          // 거칠기 매핑
+          roughnessMap={textures.roughnessMap}
+          roughnessMap-colorSpace={THREE.NoColorSpace}
+          
+          // 금속도 매핑
+          metalnessMap={textures.metalnessMap}
+          metalness={0.5}
+          metalnessMap-colorSpace={THREE.NoColorSpace}
+          
+          // 입체감 매핑
+          normalMap={textures.normalMap}
+          normalMap-colorSpace={THREE.NoColorSpace}
+          normalScale={1}
+          
+          // 입체감 매핑
+          displacementMap={textures.displacementMap}
+          displacementMap-colorSpace={THREE.NoColorSpace}
+          displacementScale={0.2}
+          displacementBias={-0.02}
+          
+          // 음영 매핑
+          aoMap={textures.aoMap}
+        />
+      </mesh>
+    </>
+  );
+};
+
+export default Box;
+```
+
+### AlphaMap
+![2024-05-19180501-ezgif com-video-to-gif-converter](https://github.com/qkrgudals1030/teamAI/assets/50951220/5561ce9f-3295-4c17-8c85-77e846bf1661)
+```
+import { useRef, useEffect } from 'react';
+import * as THREE from 'three';
+import { OrbitControls, useTexture } from '@react-three/drei';
+
+const Box = () => {
+  const mesh = useRef();
+
+  const textures = useTexture({
+    map: './images/texture/window/Glass_Window_004_basecolor.jpg',
+    roughnessMap: './images/texture/window/Glass_Window_004_roughness.jpg',
+    metalnessMap: './images/texture/window/Glass_Window_004_metallic.jpg',
+    normalMap: './images/texture/window/Glass_Window_004_normal.jpg',
+    displacementMap: './images/texture/window/Glass_Window_004_height.png',
+    aoMap: './images/texture/window/Glass_Window_004_ambientOcclusion.jpg',
+    alphaMap: './images/texture/window/Glass_Window_004_opacity_.jpg', // 원본 이미지의 어두운부분: 투명도 강, 밝은부분: 투명도 약
+  });
+
+  useEffect(() => {
+    mesh.current.geometry.setAttribute('uv2', new THREE.BufferAttribute(mesh.current.geometry.attributes.uv.array, 2));
+  }, []);
+
+  return (
+    <>
+      <OrbitControls />
+
+      <ambientLight intensity={0.2} />
+      <directionalLight position={[0, 1, -8]} intensity={0.4} />
+      <directionalLight position={[1, 2, 8]} intensity={0.4} />
+
+      <mesh ref={mesh}>
+        <cylinderGeometry args={[2, 2, 3, 1024, 1024, true]} />
+        <meshStandardMaterial
+          side={THREE.DoubleSide} // 양면 렌더링
+          
+          // 색상 매핑
+          map={textures.map}
+          
+          // 거칠기 매핑
+          roughnessMap={textures.roughnessMap}
+          roughnessMap-colorSpace={THREE.NoColorSpace}
+          
+          // 금속도 매핑
+          metalnessMap={textures.metalnessMap}
+          metalness={0.5}
+          metalnessMap-colorSpace={THREE.NoColorSpace}
+          
+          // 입체감 매핑
+          normalMap={textures.normalMap}
+          normalMap-colorSpace={THREE.NoColorSpace}
+          normalScale={1}
+          
+          // 입체감 매핑
+          displacementMap={textures.displacementMap}
+          displacementMap-colorSpace={THREE.NoColorSpace}
+          displacementScale={0.2}
+          displacementBias={-0.02}
+          
+          // 음영 매핑
+          aoMap={textures.aoMap}
+          
+          // 투명도 매핑
+          alphaMap={textures.alphaMap}
+          transparent  // 재질이 투명한지 지정
+          alphaToCoverage  // 재질의 투명한 부분을 alpha coverage로 처질할지 지정
+        />
+      </mesh>
+    </>
+  );
+};
+
+export default Box;
+```
+
+### Textures.map.repeat, Textures.map.wrapS, Textures.map.needsUpdate
+![2024-05-19180716-ezgif com-video-to-gif-converter](https://github.com/qkrgudals1030/teamAI/assets/50951220/9df552f4-4b34-409c-952a-02d8985ea1b4)
+```
+import { useRef, useEffect } from 'react';
+import * as THREE from 'three';
+import { OrbitControls, useTexture } from '@react-three/drei';
+
+const Box = () => {
+  const mesh = useRef();
+
+  const textures = useTexture({
+    map: './images/texture/window/Glass_Window_004_basecolor.jpg',
+    roughnessMap: './images/texture/window/Glass_Window_004_roughness.jpg',
+    metalnessMap: './images/texture/window/Glass_Window_004_metallic.jpg',
+    normalMap: './images/texture/window/Glass_Window_004_normal.jpg',
+    displacementMap: './images/texture/window/Glass_Window_004_height.png',
+    aoMap: './images/texture/window/Glass_Window_004_ambientOcclusion.jpg',
+    alphaMap: './images/texture/window/Glass_Window_004_opacity_.jpg',
+  });
+
+  useEffect(() => {
+    // 텍스쳐 수평방향 반복
+    textures.map.repeat.x =
+      textures.displacementMap.repeat.x =
+      textures.aoMap.repeat.x =
+      textures.roughnessMap.repeat.x =
+      textures.metalnessMap.repeat.x =
+      textures.normalMap.repeat.x =
+      textures.alphaMap.repeat.x =
+        4;
+
+    // wrapS(수평) / wrapT(수직): 반복이 시작되는 시점에서 텍스처 이미지를 어떻게 처리할 것인지
+    textures.map.wrapS =
+      textures.displacementMap.wrapS =
+      textures.aoMap.wrapS =
+      textures.roughnessMap.wrapS =
+      textures.metalnessMap.wrapS =
+      textures.normalMap.wrapS =
+      textures.alphaMap.wrapS =
+        THREE.MirroredRepeatWrapping;
+
+    // 3D 객체 업데이트
+    textures.map.needsUpdate =
+      textures.displacementMap.needsUpdate =
+      textures.aoMap.needsUpdate =
+      textures.roughnessMap.needsUpdate =
+      textures.metalnessMap.needsUpdate =
+      textures.normalMap.needsUpdate =
+      textures.alphaMap.needsUpdate =
+        true;
+
+    mesh.current.geometry.setAttribute('uv2', new THREE.BufferAttribute(mesh.current.geometry.attributes.uv.array, 2));
+  }, []);
+
+  return (
+    <>
+      <OrbitControls />
+
+      <ambientLight intensity={0.2} />
+      <directionalLight position={[0, 1, -8]} intensity={0.4} />
+      <directionalLight position={[1, 2, 8]} intensity={0.4} />
+
+      <mesh ref={mesh}>
+        <cylinderGeometry args={[2, 2, 3, 1024, 1024, true]} />
+        <meshStandardMaterial
+          side={THREE.DoubleSide} // 양면 렌더링
+          
+          // 색상 매핑
+          map={textures.map}
+          
+          // 거칠기 매핑
+          roughnessMap={textures.roughnessMap}
+          roughnessMap-colorSpace={THREE.NoColorSpace}
+          
+          // 금속도 매핑
+          metalnessMap={textures.metalnessMap}
+          metalness={0.5}
+          metalnessMap-colorSpace={THREE.NoColorSpace}
+          
+          // 입체감 매핑
+          normalMap={textures.normalMap}
+          normalMap-colorSpace={THREE.NoColorSpace}
+          normalScale={1}
+          
+          // 입체감 매핑
+          displacementMap={textures.displacementMap}
+          displacementMap-colorSpace={THREE.NoColorSpace}
+          displacementScale={0.08}
+          displacementBias={-0.2}
+          
+          // 음영 매핑
+          aoMap={textures.aoMap}
+          
+          // 투명도 매핑
+          alphaMap={textures.alphaMap}
+          transparent
+          alphaToCoverage
+        />
+      </mesh>
+    </>
+  );
+};
+
+export default Box;
+```
 
 
 
 
 
-### 출처
-
-https://velog.io/@3436rngus/R3FReact-Three-Fiber-Material
 
 
 
