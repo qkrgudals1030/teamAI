@@ -307,3 +307,13 @@ function updateGallery() {
 updateGallery();
 ```
 
+### 소감 
+
+박형민: 
+
+손정우:
+
+박준범:
+
+김준영:
+
