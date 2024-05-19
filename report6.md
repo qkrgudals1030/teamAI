@@ -249,6 +249,8 @@ export default MyElement3D
 ```
 
 #### directionalLight
+![녹음 2024-05-19 164956](https://github.com/qkrgudals1030/teamAI/assets/50951220/729aac64-04b7-40f4-892a-67245d8e98db)
+
 ```
 import { OrbitControls, useHelper } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
