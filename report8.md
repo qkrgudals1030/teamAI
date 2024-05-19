@@ -2,6 +2,12 @@
 
 #### 모델 애니메이션 여러개를 같이 사용
 
+# 결과 실행 영상
+
+
+https://github.com/qkrgudals1030/teamAI/assets/50895748/ca7b1a9e-c015-4160-9005-0e5ed75063db
+
+
 ```
 import { Environment, OrbitControls, useAnimations, useGLTF } from "@react-three/drei";
 import { useControls } from "leva";
