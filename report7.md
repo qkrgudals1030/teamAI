@@ -1,7 +1,7 @@
 ### 카메라 (Camera)
-![chrome-capture-2024-5-19](https://github.com/wonder21c/teamAI/assets/50861700/3df7ac6f-f8e9-4f2d-82cc-6141586e9c6a)
 
 #### Perspective Camera 
+![chrome-capture-2024-5-19](https://github.com/wonder21c/teamAI/assets/50861700/3df7ac6f-f8e9-4f2d-82cc-6141586e9c6a)
 
 #### App.jsx
 ```
@@ -155,6 +155,7 @@ export default MyElement3D
 ```
 
 #### Orthographic Camera
+![123123](https://github.com/qkrgudals1030/teamAI/assets/50861700/06928890-dc09-4a1f-b760-25554a5271ef)
 
 #### App.jsx
 ```
