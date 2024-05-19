@@ -554,3 +554,36 @@ function MyElement3D() {
 
 export default MyElement3D
 ```
+
+# 재질 2
+
+
+https://github.com/qkrgudals1030/teamAI/assets/50895748/646ada72-b340-4e3e-8222-2fe702385804
+
+
+```
+import { MeshWobbleMaterial, OrbitControls } from '@react-three/drei';
+
+const Wobble = () => {
+  return (
+    <>
+      <OrbitControls />
+
+      <ambientLight intensity={0.2} />
+      <directionalLight position={[0, 1, 0]} />
+      <directionalLight position={[1, 2, 8]} intensity={0.7} />
+
+      <mesh>
+        <torusGeometry />
+        <MeshWobbleMaterial
+          factor={1} // 흔들림 정도
+          speed={10} // 흔들림 속도
+        />
+      </mesh>
+    </>
+  );
+};
+
+export default Wobble;
+
+```
