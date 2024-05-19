@@ -445,6 +445,7 @@ function App() {
 
 export default App
 ```
+![image](https://github.com/qkrgudals1030/teamAI/assets/50895124/b35608c1-b19a-43af-88de-4ef588ccf07f)
 
 #### meshMatcapMaterial
 ```
@@ -500,6 +501,7 @@ function MyElement3D() {
 
 export default MyElement3D
 ```
+![image](https://github.com/qkrgudals1030/teamAI/assets/50895124/7b68771b-418a-4ed2-a3b2-e50ee09ca5e3)
 
 #### meshToonMaterial
 ```
@@ -587,3 +589,285 @@ const Wobble = () => {
 export default Wobble;
 
 ```
+
+#### MeshReflectorMaterial
+
+![image](https://github.com/qkrgudals1030/teamAI/assets/50895124/89146bf8-8ee4-4bf2-a119-121ae61ce0b5)
+
+```
+import { MeshReflectorMaterial, OrbitControls } from '@react-three/drei';
+
+const Reflector = () => {
+  return (
+    <>
+      <OrbitControls />
+
+      <ambientLight intensity={0.2} />
+      <directionalLight position={[0, 1, 0]} />
+      <directionalLight position={[1, 2, 8]} intensity={0.7} />
+
+      <mesh position={[0, -0.6, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        <planeGeometry args={[10, 10]} />
+        <MeshReflectorMaterial
+          blur={[300, 100]}
+          resolution={2048}
+          mixBlur={1}
+          mixStrength={30}
+          roughness={1}
+          depthScale={0.7}
+          minDepthThreshold={0.4}
+          maxDepthThreshold={1.4}
+          color='#777777'
+          metalness={0.5}
+        />
+      </mesh>
+
+      <mesh position={[0, 0, 0]}>
+        <boxGeometry />
+        <meshStandardMaterial color='cyan' />
+      </mesh>
+    </>
+  );
+};
+
+export default Reflector;
+```
+
+### MeshRefractionMaterial
+
+![image](https://github.com/qkrgudals1030/teamAI/assets/50895124/6790cb8e-0958-4981-b2ff-e167810f141a)
+
+
+```
+import { useLoader } from '@react-three/fiber';
+import { CubeCamera, MeshRefractionMaterial, OrbitControls } from '@react-three/drei';
+import { RGBELoader } from 'three-stdlib';
+
+const Refraction = () => {
+  const texture = useLoader(RGBELoader, './images/hdr/shanghai_bund_1k.hdr');
+
+  return (
+    <>
+      <OrbitControls />
+
+      <ambientLight intensity={0.2} />
+      <directionalLight position={[0, 1, 0]} />
+      <directionalLight position={[1, 2, 8]} intensity={0.7} />
+
+      <CubeCamera resolution={1024} frames={1} envMap={texture}>
+        {(texture) => (
+          <mesh position={[0, -0.6, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+            <dodecahedronGeometry />
+            <MeshRefractionMaterial
+              envMap={texture}
+              toneMapped={false}
+              bounces={2}
+              aberrationsStrength={0.03}
+              ior={2.75}
+              fresnel={1}
+              color='white'
+              fastChroma={true}
+            />
+          </mesh>
+        )}
+      </CubeCamera>
+    </>
+  );
+};
+
+export default Refraction;
+```
+
+### MeshTransmissionMaterial
+
+![image](https://github.com/qkrgudals1030/teamAI/assets/50895124/8bdf83fc-d39e-4994-b114-5fd1fe8a2045)
+
+
+```
+import * as THREE from 'three';
+import { MeshTransmissionMaterial, OrbitControls } from '@react-three/drei';
+import { useControls } from 'leva';
+
+const Transmission = () => {
+  const config = useControls({
+    transmissionSampler: false,
+    backside: false,
+    samples: { value: 10, min: 1, max: 32, step: 1 },
+    resolution: { value: 2048, min: 256, max: 2048, step: 256 },
+    transmission: { value: 1, min: 0, max: 1 },
+    roughness: { value: 0.0, min: 0, max: 1, step: 0.01 },
+    thickness: { value: 3.5, min: 0, max: 10, step: 0.01 },
+    ior: { value: 1.5, min: 1, max: 5, step: 0.01 },
+    chromaticAberration: { value: 0.06, min: 0, max: 1 },
+    anisotropy: { value: 0.1, min: 0, max: 1, step: 0.01 },
+    distortion: { value: 0.0, min: 0, max: 1, step: 0.01 },
+    distortionScale: { value: 0.3, min: 0.01, max: 1, step: 0.01 },
+    temporalDistortion: { value: 0.5, min: 0, max: 1, step: 0.01 },
+    clearcoat: { value: 1, min: 0, max: 1 },
+    attenuationDistance: { value: 0.5, min: 0, max: 10, step: 0.01 },
+    attenuationColor: '#ffffff',
+    color: '#c9ffa1',
+    bg: '#839681',
+  });
+
+  return (
+    <>
+      <OrbitControls />
+
+      <ambientLight intensity={0.2} />
+      <directionalLight position={[0, 1, 0]} />
+      <directionalLight position={[1, 2, 8]} intensity={0.7} />
+
+      <mesh>
+        <sphereGeometry args={[1.4, 128, 128]} />
+        <MeshTransmissionMaterial {...config} background={new THREE.Color(config.bg)} />
+      </mesh>
+
+      <mesh scale={0.3}>
+        <torusGeometry args={[0.5, 0.2, 32]} />
+        <meshStandardMaterial />
+      </mesh>
+    </>
+  );
+};
+
+export default Transmission;
+
+```
+
+### MeshDistortMaterial
+
+![image](https://github.com/qkrgudals1030/teamAI/assets/50895124/cb0482b8-f5f5-4a60-9ed1-c220c82eb54d)
+
+```
+import { MeshDistortMaterial, OrbitControls } from '@react-three/drei';
+
+const Distort = () => {
+  return (
+    <>
+      <OrbitControls />
+
+      <ambientLight intensity={0.2} />
+      <directionalLight position={[0, 1, 0]} />
+      <directionalLight position={[1, 2, 8]} intensity={0.7} />
+
+      <mesh>
+        <torusGeometry />
+        <MeshDistortMaterial 
+          distort={0.9} // 왜곡 정도
+          speed={3}   // 왜곡 속도
+        />
+      </mesh>
+    </>
+  );
+};
+
+export default Distort;
+```
+
+### MeshDiscardMaterial(재질이 적용된 메시르 화면에 표시하지 않도록 함.)
+
+
+```
+import { MeshDiscardMaterial, OrbitControls } from '@react-three/drei';
+
+const Discard = () => {
+  return (
+    <>
+      <OrbitControls />
+
+      <ambientLight intensity={0.2} />
+      <directionalLight position={[0, 1, 0]} />
+      <directionalLight position={[1, 2, 8]} intensity={0.7} />
+
+      <mesh>
+        <torusGeometry />
+        <MeshDiscardMaterial />
+      </mesh>
+    </>
+  );
+};
+
+export default Discard;
+
+```
+
+### shaderMaterial
+
+![image](https://github.com/qkrgudals1030/teamAI/assets/50895124/1a92497f-64ff-4978-a864-e56b20496a97)
+
+```
+import * as THREE from 'three';
+import { extend } from '@react-three/fiber';
+import { OrbitControls, shaderMaterial } from '@react-three/drei';
+
+const SimpleMaterial = new shaderMaterial(
+  // [첫번째 인자] uColor라는 uniform을 정의하여 색상정보를 GPU에 전달
+  {
+    uColor: new THREE.Color(1, 0, 0),
+  },
+
+  // [두번째 인자] Vertex(꼭짓점) Shader: Geometry의 좌표값을 화면에 출력하기 위한 좌표로 변경하는 목적
+  `
+  varying vec2 vUv;
+
+  void main() {
+    vUv = uv;
+    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+  }
+`,
+
+  // [세번째 인자] Fragment shader: mesh가 화면에 픽셀 단위로 표시될 때 각 픽셀에 생상 값을 결정하는 목적
+  // 버텍스 쉐이더에서 계산된 정보를 사용하여 각 픽셀의 색상을 결정함.
+  `
+  uniform vec3 uColor;
+  varying vec2 vUv;
+
+  void main() {
+    gl_FragColor = vec4(vUv.y * uColor, 1.0);
+  }
+`
+);
+
+// SimpleMaterial를 태그 형태로 사용하기 위해서 R3F의 extend 함수를 사용함.
+extend({ SimpleMaterial });
+
+const Shader = () => {
+  return (
+    <>
+      <OrbitControls />
+
+      <ambientLight intensity={0.2} />
+      <directionalLight position={[0, 1, 0]} />
+      <directionalLight position={[1, 2, 8]} intensity={0.7} />
+
+      <mesh>
+        <boxGeometry />
+        <simpleMaterial uColor={'red'} /> {/* jsx 에서는 소문자로 사용 */} {/* uColor를 전달할 수 있음 */}
+      </mesh>
+    </>
+  );
+};
+
+export default Shader;
+```
+
+
+
+
+
+
+### 출처
+
+https://velog.io/@3436rngus/R3FReact-Three-Fiber-Material
+
+
+
+
+
+
+
+
+
+
+
