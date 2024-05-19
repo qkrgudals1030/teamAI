@@ -165,6 +165,7 @@ export default MyElement3D
 ```
 
 #### HemisphereLight
+![녹음 2024-05-19 164712](https://github.com/qkrgudals1030/teamAI/assets/50951220/232a6396-57a7-4e18-bab7-3b92569aa2ee)
 
 ```
 import { OrbitControls } from "@react-three/drei";
