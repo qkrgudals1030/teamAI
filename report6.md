@@ -451,6 +451,8 @@ export default MyElement3D
 ```
 
 #### spotLight
+![녹음 2024-05-19 165628](https://github.com/qkrgudals1030/teamAI/assets/50951220/f5082b06-9752-4a3d-933e-fcc5a071f7e9)
+
 ```
 import { OrbitControls, useHelper } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
