@@ -558,6 +558,8 @@ export default MyElement3D
 ```
 
 #### rectAreaLight
+![녹음 2024-05-19 171021](https://github.com/qkrgudals1030/teamAI/assets/50951220/14433808-c70a-435f-ab8d-3d6d2620a7f9)
+
 ```
 import { Environment, OrbitControls, useHelper } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
