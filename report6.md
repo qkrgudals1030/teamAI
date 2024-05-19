@@ -357,6 +357,7 @@ export default MyElement3D
 
 
 #### pointLight
+![녹음 2024-05-19 165354](https://github.com/qkrgudals1030/teamAI/assets/50951220/1c9d20ce-763b-4610-ba4e-2b54e3102eab)
 
 ```
 import { OrbitControls, useHelper } from "@react-three/drei";
