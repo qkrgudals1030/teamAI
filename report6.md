@@ -659,6 +659,8 @@ export default MyElement3D
 ```
 
 #### Environment
+![스크린샷 2024-05-19 170550](https://github.com/qkrgudals1030/teamAI/assets/50951220/64a0384e-1cdb-4bce-8d5e-b1fafad2d0e5)
+
 ```
 import { Environment, OrbitControls, useHelper } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
