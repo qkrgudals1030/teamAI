@@ -83,6 +83,7 @@ export default MyElement3D
 ```
 
 #### ambientLight
+![녹음 2024-05-19 164339](https://github.com/qkrgudals1030/teamAI/assets/50951220/9f06f2dc-7d41-4414-9d9d-1ef73c39730e)
 
 ```
 import { OrbitControls } from "@react-three/drei";
